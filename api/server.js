@@ -9,7 +9,7 @@ const checkAuth = require("../auth/checkAuth");
 const server = express();
 
 const sessionConfig = {
-	name: "cookie",
+	name: "SID",
 	secret: process.env.SESSION_SECRET || "c'est la vie",
 	resave: false,
 	saveUninitialized: process.env.SEND_COOKIES || true,
@@ -21,7 +21,7 @@ const sessionConfig = {
 };
 
 server.use(express.json());
-server.use(cors());
+server.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 server.use(session(sessionConfig));
 
 server.use("/api/users", checkAuth, usersRouter);
